@@ -86,7 +86,7 @@ class NMT(nn.Module):
         ###     Dropout Layer:
         ###         https://pytorch.org/docs/stable/generated/torch.nn.Dropout.html
         h_size = hidden_size
-        self.post_embed_cnn = nn.Conv1d(embed_size, embed_size, kernel_size=2, padding="same")
+        self.post_embed_cnn = nn.Conv1d(embed_size, embed_size, kernel_size=2, padding='same')
 
         self.encoder = nn.LSTM(embed_size, h_size, bias=True, bidirectional=True)
         self.decoder = nn.LSTMCell(embed_size + h_size, h_size, bias=True)
@@ -194,7 +194,6 @@ class NMT(nn.Module):
 
         X = self.model_embeddings.source(source_padded)
         X = X.permute(1, 2, 0)
-
 
         X = self.post_embed_cnn(X).permute(2, 0, 1)
         X = pack_padded_sequence(input=X, lengths=source_lengths)
